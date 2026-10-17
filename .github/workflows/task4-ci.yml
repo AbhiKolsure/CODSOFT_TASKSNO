@@ -15,17 +15,17 @@ permissions:
 jobs:
   test-and-build:
     name: Test application and build Docker image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
         working-directory: Task-1-Dockerized-Web-App
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -40,7 +40,7 @@ jobs:
 
       - name: Upload pytest report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: task1-pytest-report
           path: Task-1-Dockerized-Web-App/test-results.xml
@@ -49,11 +49,11 @@ jobs:
 
   nginx-smoke-test:
     name: Smoke test Task 3 Nginx web server
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Validate Docker Compose configuration
         run: docker compose -f Task-3-Nginx-Web-Server/compose.yaml config --quiet
