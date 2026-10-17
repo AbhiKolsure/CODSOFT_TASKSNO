@@ -136,8 +136,8 @@ Recommended rules, where supported: require PRs before merging, at least one app
 
 ```powershell
 gh auth status
-gh api repos/AbhiKolsure/CODSOFT_TASKSNODevOps/rulesets
-gh api repos/AbhiKolsure/CODSOFT_TASKSNODevOps/branches/main/protection
+gh api repos/AbhiKolsure/CODSOFT_TASKSNO/rulesets
+gh api repos/AbhiKolsure/CODSOFT_TASKSNO/branches/main/protection
 ```
 
 Permission errors or plan limitations leave the state unverified. Do not change settings without owner approval.

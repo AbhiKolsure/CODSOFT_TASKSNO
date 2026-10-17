@@ -1,4 +1,4 @@
-﻿# CodSoft DevOps Internship Projects
+# CodSoft DevOps Internship Projects
 
 This repository contains practical projects completed for the CodSoft DevOps internship. Each task has its own folder with source files and task-specific documentation.
 
@@ -24,7 +24,7 @@ This repository contains practical projects completed for the CodSoft DevOps int
 ### Task 4 - CI Pipeline with GitHub Actions
 - **Stack:** GitHub Actions, Python, pytest, Docker
 - Runs Task 1 tests and Docker image-build validation plus automated Task 3 Nginx smoke tests on configured events.
-- Latest verified main-branch workflow run: successful.
+- Latest verified main-branch workflow run: [39014433348 successful](https://github.com/AbhiKolsure/CODSOFT_TASKSNO/actions/runs/39014433348).
 - This workflow validates the build; it does not deploy to a cloud environment.
 - [Task 4 documentation](Task-4-GitHub-Actions-CICD/README.md)
 
@@ -73,4 +73,4 @@ README.md
 - Do not treat optional cloud deployment or other unimplemented extensions as completed.
 
 ## Repository
-[View this project on GitHub](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps)
+[View this project on GitHub](https://github.com/AbhiKolsure/CODSOFT_TASKSNO)
