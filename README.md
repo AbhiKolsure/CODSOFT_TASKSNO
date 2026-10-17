@@ -23,7 +23,7 @@ This repository contains practical projects completed for the CodSoft DevOps int
 
 ### Task 4 - CI Pipeline with GitHub Actions
 - **Stack:** GitHub Actions, Python, pytest, Docker
-- Runs automated tests and builds the Task 1 Docker image on configured events.
+- Runs Task 1 tests and Docker image-build validation plus automated Task 3 Nginx smoke tests on configured events.
 - Latest verified main-branch workflow run: successful.
 - This workflow validates the build; it does not deploy to a cloud environment.
 - [Task 4 documentation](Task-4-GitHub-Actions-CICD/README.md)
@@ -64,7 +64,7 @@ README.md
 ## Validation Summary
 - Task 1: 6 automated tests passed in the recorded local test run.
 - Task 2: workflow documentation and examples are included; see the Task 2 evidence log for items that still need evidence.
-- Task 3: Nginx configuration, homepage, virtual host, and custom 404 response were tested locally.
+- Task 3: local configuration, homepage, virtual host, and custom 404 checks are recorded; automated health, response-header, and smoke tests run through Task 4 CI once the workflow enhancement is merged and its run passes.
 - Task 4: GitHub Actions successfully completed automated tests and Docker image build validation.
 
 ## Scope and Limitations

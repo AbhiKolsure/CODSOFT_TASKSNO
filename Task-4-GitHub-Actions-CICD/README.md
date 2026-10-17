@@ -2,13 +2,13 @@
 
 ## Purpose
 
-This task adds an automated continuous-integration workflow for the existing Task 1 FastAPI application. On supported events, GitHub Actions installs the declared Python dependencies, runs the automated tests, and validates that the Docker image builds. It does not publish the image or deploy the application.
+This task adds continuous integration for the Task 1 FastAPI API and Task 3 Nginx static website. On pushes to `main` and pull requests targeting `main`, GitHub Actions installs Task 1 dependencies, runs pytest, builds the Task 1 Docker image, uploads a short-lived JUnit report artifact, and runs isolated Nginx smoke tests for container health, Nginx configuration, homepage, virtual host, custom 404 behavior, security headers, and server-version disclosure. The workflow validates rather than publishes the Docker image and does not deploy to a public cloud environment.
 
 ## Architecture
 
-The executable workflow is at the repository-root path `.github/workflows/task4-ci.yml`, which is where GitHub Actions discovers workflows. Task-specific documentation stays in this directory. The workflow runs on an Ubuntu GitHub-hosted runner, checks out the existing repository, selects Python 3.12 (matching the Task 1 Dockerfile base image), and executes commands from `Task-1-Dockerized-Web-App/`.
+The executable workflow is at the repository-root path `.github/workflows/task4-ci.yml`, which is where GitHub Actions discovers workflows. It contains two independent jobs on GitHub-hosted Ubuntu runners: one installs Python 3.12 dependencies, tests the Task 1 API, builds its Docker image, and uploads the JUnit report; the other calls `.github/scripts/test-task3-nginx.sh` to exercise the Docker Compose Nginx site in an isolated project.
 
-The job has only `contents: read` permission. It uses the official `actions/checkout` and `actions/setup-python` actions, does not access secrets, and does not push an image to a registry.
+The workflow has only `contents: read` permission. It uses the official `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` actions, does not access secrets, and does not push an image to a registry.
 
 ## Triggers
 
@@ -18,16 +18,26 @@ The job has only `contents: read` permission. It uses the official `actions/chec
 
 ## Workflow steps
 
-In order, the workflow:
+The workflow defines two independent jobs.
+
+**Job 1 â€” Task 1 test and Docker build**
 
 1. Checks out the repository with `actions/checkout@v4`.
 2. Sets up Python 3.12 with `actions/setup-python@v5`.
-3. Installs dependencies using `python -m pip install -r requirements.txt`.
-4. Runs `python -m pytest`.
-5. Builds `codsoft-task1:latest` with `docker build -t codsoft-task1:latest .`.
+3. Installs dependencies from `Task-1-Dockerized-Web-App/requirements.txt`.
+4. Runs pytest and writes `test-results.xml` in JUnit format.
+5. Builds `codsoft-task1:latest` as a validation step only.
+6. Uploads the JUnit report as the `task1-pytest-report` artifact for seven days, including when the test step fails and produces a report.
 
-The job stops on a failed command. The image is built only on the runner for validation; there is no login or push step.
+**Job 2 â€” Task 3 Nginx smoke test**
 
+1. Validates `Task-3-Nginx-Web-Server/compose.yaml`.
+2. Starts a separate Compose project on host port `18083` by default, without replacing the demo stack on port `8083`.
+3. Waits for the Compose health check and runs `nginx -t`.
+4. Checks homepage HTTP 200 and content, the `codsoft.local` virtual host, custom 404 status and content, four security response headers, and hidden Nginx version disclosure.
+5. Tears down the isolated stack and prints Compose logs if a test fails.
+
+A failing command makes its job fail. The image is built only on the runner for validation; there is no registry login, image push, or cloud deployment.
 ## Inspect GitHub Actions runs
 
 After this workflow file is available on GitHub in a branch/event that matches a trigger:
@@ -52,12 +62,22 @@ docker build -t codsoft-task1:latest .
 
 These commands require a compatible Python installation, package-index access for dependency installation, and a running Docker Engine for the image build. They validate locally only; they do not trigger GitHub Actions or publish the image.
 
+## Run the Task 3 smoke test locally
+
+From the repository root, use Git Bash (or another Bash environment) with Docker Desktop/Engine and Docker Compose available:
+
+```bash
+bash .github/scripts/test-task3-nginx.sh
+```
+
+The script uses a separate Compose project and host port `18083` by default. It removes that isolated test stack after the checks finish; on failure, it prints the Compose logs. The normal demo can continue to use port `8083`.
 ## Troubleshooting
 
 - **Dependency installation fails:** inspect the pip error, Python version, and package-index connectivity. Do not remove or weaken the declared requirements to hide a failure.
 - **Tests fail:** open the test step log, reproduce with `python -m pytest` from the Task 1 directory, and address the underlying cause without weakening tests.
 - **Docker build fails:** reproduce with the documented `docker build` command, inspect the failing Dockerfile layer and build output, and confirm the Docker daemon is available.
 - **Workflow does not trigger:** confirm the workflow exists at repository-root `.github/workflows/task4-ci.yml`, the event targets `main` as configured, and the file is present on the relevant GitHub branch. Manual dispatch is available only for branches that contain the workflow.
+- **Nginx smoke test fails:** inspect the `Run Nginx smoke tests` log; ensure Docker Engine/Compose are available and host port `18083` is free. The script prints Compose logs when a test fails.
 - **Workflow permission or action error:** inspect the run logs and repository policy. The job requests only `contents: read`; do not broaden permissions without a specific need.
 
 ## Verification status and limitations
