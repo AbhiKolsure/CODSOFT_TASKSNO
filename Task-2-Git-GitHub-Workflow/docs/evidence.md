@@ -1,11 +1,11 @@
-﻿# Task 2 - Git and GitHub Workflow Evidence
+# Task 2 - Git and GitHub Workflow Evidence
 
 ## Repository
-Repository: https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps
+Repository: https://github.com/AbhiKolsure/CODSOFT_TASKSNO
 Task folder: Task-2-Git-GitHub-Workflow
 
 ## Verified Pull Request
-PR #1: https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/pull/1
+PR #1: https://github.com/AbhiKolsure/CODSOFT_TASKSNO/pull/1
 Title: Document feature branch workflow example
 Base branch: main
 Feature branch: task-2/feature-branch-demo

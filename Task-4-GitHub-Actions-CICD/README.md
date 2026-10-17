@@ -6,9 +6,9 @@ This task adds continuous integration for the Task 1 FastAPI API and Task 3 Ngin
 
 ## Architecture
 
-The executable workflow is at the repository-root path `.github/workflows/task4-ci.yml`, which is where GitHub Actions discovers workflows. It contains two independent jobs on GitHub-hosted Ubuntu runners: one installs Python 3.12 dependencies, tests the Task 1 API, builds its Docker image, and uploads the JUnit report; the other calls `.github/scripts/test-task3-nginx.sh` to exercise the Docker Compose Nginx site in an isolated project.
+The executable workflow is at the repository-root path `.github/workflows/task4-ci.yml`, which is where GitHub Actions discovers workflows. It contains two independent jobs on GitHub-hosted `ubuntu-24.04` runners: one installs Python 3.12 dependencies, tests the Task 1 API, builds its Docker image, and uploads the JUnit report; the other calls `.github/scripts/test-task3-nginx.sh` to exercise the Docker Compose Nginx site in an isolated project.
 
-The workflow has only `contents: read` permission. It uses the official `actions/checkout`, `actions/setup-python`, and `actions/upload-artifact` actions, does not access secrets, and does not push an image to a registry.
+The workflow has only `contents: read` permission. It uses the official `actions/checkout@v7`, `actions/setup-python@v7`, and `actions/upload-artifact@v7` actions, does not access secrets, and does not push an image to a registry.
 
 ## Triggers
 
@@ -22,8 +22,8 @@ The workflow defines two independent jobs.
 
 **Job 1 â€” Task 1 test and Docker build**
 
-1. Checks out the repository with `actions/checkout@v4`.
-2. Sets up Python 3.12 with `actions/setup-python@v5`.
+1. Checks out the repository with `actions/checkout@v7`.
+2. Sets up Python 3.12 with `actions/setup-python@v7`.
 3. Installs dependencies from `Task-1-Dockerized-Web-App/requirements.txt`.
 4. Runs pytest and writes `test-results.xml` in JUnit format.
 5. Builds `codsoft-task1:latest` as a validation step only.
@@ -83,9 +83,10 @@ The script uses a separate Compose project and host port `18083` by default. It 
 ## Verification status and limitations
 
 Verified successful GitHub-hosted runs on `main` include:
-- [Run 39009468995](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/39009468995)
-- [Run 39008594252](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/39008594252)
-- [Run 38216295593](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/38216295593)
+- [Latest main run 39014433348](https://github.com/AbhiKolsure/CODSOFT_TASKSNO/actions/runs/39014433348)
+- [Run 39009468995](https://github.com/AbhiKolsure/CODSOFT_TASKSNO/actions/runs/39009468995)
+- [Run 39008594252](https://github.com/AbhiKolsure/CODSOFT_TASKSNO/actions/runs/39008594252)
+- [Run 38216295593](https://github.com/AbhiKolsure/CODSOFT_TASKSNO/actions/runs/38216295593)
 
 These runs completed dependency installation, automated tests, and Docker image build validation. The workflow does not push an image or deploy the application to a cloud environment.
 
