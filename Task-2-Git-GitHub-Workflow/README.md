@@ -4,7 +4,7 @@
 
 This task documents a safe, repeatable Git and GitHub collaboration workflow: inspect an existing repository, make small changes on feature branches, review diffs, prepare pull requests, review changes, and practice resolving a merge conflict in isolated example files. It reuses the repository at `C:\Users\kolsu\task-1-dockerized-web-app`; it does not create another repository or change Task 1.
 
-**Evidence boundary:** this folder contains instructions and harmless exercise files. It does not prove that a feature branch was pushed, a pull request was opened or reviewed, a conflict was actually resolved, or branch protection was configured. Record those outcomes only after performing and verifying the corresponding actions.
+**Evidence boundary:** PR #1, "Document feature branch workflow example," was opened and merged into `main`; see `docs/evidence.md`. Formal reviewer approval, successful conflict resolution, and main-branch protection settings remain unverified. Record them as complete only after observing the relevant results.
 
 ## Repository layout
 
@@ -98,7 +98,7 @@ Review the diff and scope. A contributor may then stage and commit only the revi
 
 For real collaboration, push a reviewed feature branch only when authorized, then open GitHub and create a PR with base `main` and compare set to that branch. Complete `.github/PULL_REQUEST_TEMPLATE.md`, request a reviewer, respond to feedback, and merge only after required approvals/checks pass. Record actual PR state and links in `docs/evidence.md`.
 
-The template is nested under Task 2 and is not automatically applied by GitHub. No PR has been opened or reviewed merely by adding these files. Use `docs/code-review-checklist.md` on the latest revision; feedback should be actionable and respectful.
+The template is nested under Task 2 and is not automatically applied by GitHub. PR #1 was opened and merged into `main`; its details are recorded in `docs/evidence.md`. This does not establish formal reviewer approval, successful conflict resolution, or branch protection. Use `docs/code-review-checklist.md` on the latest revision; feedback should be actionable and respectful.
 
 ## Safe merge-conflict demonstration
 
