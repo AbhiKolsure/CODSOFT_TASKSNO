@@ -62,6 +62,11 @@ These commands require a compatible Python installation, package-index access fo
 
 ## Verification status and limitations
 
-The workflow definition and this documentation are being prepared in the current local working branch. A GitHub-hosted run has not been verified by this README; record its result only after inspecting an actual Actions run. Local test and Docker build results must likewise be reported separately and only if executed successfully.
+Verified successful GitHub-hosted runs on `main` include:
+- [Run 39009468995](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/39009468995)
+- [Run 39008594252](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/39008594252)
+- [Run 38216295593](https://github.com/AbhiKolsure/CODSOFT_TASKSNODevOps/actions/runs/38216295593)
 
-Cloud deployment is intentionally not configured. No target environment, deployment architecture, access approval, or deployment credentials have been specified. A safe deployment workflow would first require an explicitly selected target (for example, a named cloud service), documented environment and rollback strategy, owner-approved repository/environment configuration, least-privilege short-lived credentials or supported identity federation, protected deployment environments/approvals, and a separate reviewed deployment job. Secrets must not be added to source files or exposed in logs. Until those prerequisites are defined and approved, CI stops at tests and local image-build validation.
+These runs completed dependency installation, automated tests, and Docker image build validation. The workflow does not push an image or deploy the application to a cloud environment.
+
+Cloud deployment remains unconfigured. No target environment, deployment architecture, access approval, or deployment credentials have been specified. Deployment should be considered a separate future task requiring an approved target, a rollback plan, and appropriately scoped credentials. Never commit secrets.
